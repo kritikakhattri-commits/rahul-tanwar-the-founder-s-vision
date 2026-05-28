@@ -1,4 +1,7 @@
 import aboutImg from "@/assets/rahul-about.jpg";
+import { StackedCard } from "@/components/site/Motion";
+import { useLocalParallax } from "@/components/site/motion-config";
+import { motion } from "framer-motion";
 
 const pillars = [
   { k: "01", t: "Leadership", d: "Building teams that compound talent over years." },
@@ -8,13 +11,19 @@ const pillars = [
 ];
 
 export function Intro() {
+  const [portraitRef, portraitY] = useLocalParallax([-26, 30]);
+
   return (
     <section id="about" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1600px] px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
         {/* Left — portrait + caption */}
         <div className="lg:col-span-5 lg:sticky lg:top-28 self-start reveal-up">
-          <div className="relative aspect-[4/5] overflow-hidden bg-cream">
-            <img
+          <div
+            ref={portraitRef}
+            className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-card shadow-[var(--shadow-soft)]"
+          >
+            <motion.img
+              style={{ y: portraitY, scale: 1.06 }}
               src={aboutImg}
               alt="Rahul Tanwar at work"
               loading="lazy"
@@ -46,35 +55,43 @@ export function Intro() {
             behind <em className="text-accent">multiple ventures.</em>
           </h2>
 
-          <div className="space-y-7 text-lg md:text-xl leading-relaxed text-foreground/85 max-w-2xl">
+          <div className="space-y-7 text-lg md:text-xl leading-[1.75] text-foreground/85 max-w-2xl">
             <p className="reveal">
-              Rahul Tanwar is a modern business builder — an operator who treats
-              every company as a long-form act of craftsmanship. His work spans
-              <span className="text-accent"> beverages, consumer brands, textiles, manufacturing, finance</span>
+              Rahul Tanwar is a modern business builder — an operator who treats every company as a
+              long-form act of craftsmanship. His work spans
+              <span className="text-accent">
+                {" "}
+                beverages, consumer brands, textiles, manufacturing, finance
+              </span>
               and emerging technology.
             </p>
             <p className="reveal">
-              From a decade in global financial services to leadership in the
-              quick-service industry, his career has been a deliberate study in
-              building organisations that grow with discipline and outlast their founders.
+              From a decade in global financial services to leadership in the quick-service
+              industry, his career has been a deliberate study in building organisations that grow
+              with discipline and outlast their founders.
             </p>
             <p className="reveal text-ink-soft">
-              Today, his portfolio is an ecosystem — interconnected ventures
-              designed to create sustained, generational value for partners,
-              employees and the communities they touch.
+              Today, his portfolio is an ecosystem — interconnected ventures designed to create
+              sustained, generational value for partners, employees and the communities they touch.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-px bg-border mt-16 reveal-up">
-            {pillars.map((p) => (
-              <div key={p.k} className="bg-background p-8 md:p-10 group hover:bg-cream transition-colors duration-500">
+          <div className="stack-scene grid grid-cols-1 sm:grid-cols-2 gap-4 mt-16 reveal-up">
+            {pillars.map((p, i) => (
+              <StackedCard
+                key={p.k}
+                index={i}
+                className="stack-sticky rounded-[1.25rem] bg-card p-8 md:p-10 shadow-[var(--shadow-soft)] group hover:bg-secondary hover:text-background transition-colors duration-500"
+              >
                 <div className="flex items-baseline justify-between mb-6">
                   <span className="eyebrow">{p.k}</span>
-                  <span className="h-px w-10 bg-accent" />
+                  <span className="h-px w-10 bg-accent-warm" />
                 </div>
-                <h3 className="font-display text-3xl md:text-4xl mb-3">{p.t}</h3>
-                <p className="text-sm text-ink-soft leading-relaxed">{p.d}</p>
-              </div>
+                <h3 className="font-display text-3xl md:text-4xl leading-tight mb-3">{p.t}</h3>
+                <p className="text-sm text-ink-soft group-hover:text-background/70 leading-relaxed transition-colors duration-500">
+                  {p.d}
+                </p>
+              </StackedCard>
             ))}
           </div>
         </div>
