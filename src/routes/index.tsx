@@ -1,21 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
+import { CompanyTicker } from "@/components/site/CompanyTicker";
 import { Intro } from "@/components/site/Intro";
+import { IndiaUAEMarketSection } from "@/components/site/IndiaUAEMarketSection";
 import { Ventures } from "@/components/site/Ventures";
 import { Philosophy } from "@/components/site/Philosophy";
 import { Timeline } from "@/components/site/Timeline";
 import { Vision } from "@/components/site/Vision";
 import { Contact, Footer } from "@/components/site/Contact";
-import { useRevealAll } from "@/hooks/use-reveal";
+import { ExecutiveAssistant } from "@/components/site/ExecutiveAssistant";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Rahul Tanwar — Founder, Investor & Business Leader" },
-      { name: "description", content: "Rahul Tanwar is an entrepreneur building an ecosystem of ventures across beverages, consumer brands, textiles, manufacturing, finance and innovation-led industries." },
+      {
+        name: "description",
+        content:
+          "Rahul Tanwar is an entrepreneur building an ecosystem of ventures across beverages, consumer brands, textiles, manufacturing, finance and innovation-led industries.",
+      },
       { property: "og:title", content: "Rahul Tanwar — Founder, Investor & Business Leader" },
-      { property: "og:description", content: "Building businesses that create lasting value. An ecosystem of ventures led by Rahul Tanwar." },
+      {
+        property: "og:description",
+        content:
+          "Building businesses that create lasting value. An ecosystem of ventures led by Rahul Tanwar.",
+      },
       { property: "og:type", content: "profile" },
     ],
   }),
@@ -23,18 +33,20 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  useRevealAll();
   return (
     <main className="relative bg-background text-foreground overflow-x-hidden">
       <Nav />
       <Hero />
+      <CompanyTicker />
       <Intro />
+      <IndiaUAEMarketSection />
       <Ventures />
       <Philosophy />
       <Timeline />
       <Vision />
       <Contact />
       <Footer />
+      <ExecutiveAssistant />
     </main>
   );
 }

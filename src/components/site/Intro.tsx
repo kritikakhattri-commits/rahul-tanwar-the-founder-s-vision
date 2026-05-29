@@ -1,33 +1,39 @@
 import aboutImg from "@/assets/rahul-about.jpg";
-import { StackedCard } from "@/components/site/Motion";
-import { useLocalParallax } from "@/components/site/motion-config";
-import { motion } from "framer-motion";
 
 const pillars = [
-  { k: "01", t: "Leadership", d: "Building teams that compound talent over years." },
-  { k: "02", t: "Execution", d: "Translating bold vision into operational reality." },
-  { k: "03", t: "Innovation", d: "Reframing industries through first-principles thinking." },
-  { k: "04", t: "Excellence", d: "Holding every venture to an uncompromising standard." },
+  {
+    k: "01",
+    t: "Leadership",
+    d: "Building teams that compound talent over years.",
+  },
+  {
+    k: "02",
+    t: "Execution",
+    d: "Translating bold vision into operational reality.",
+  },
+  {
+    k: "03",
+    t: "Innovation",
+    d: "Reframing industries through first-principles thinking.",
+  },
+  {
+    k: "04",
+    t: "Excellence",
+    d: "Holding every venture to an uncompromising standard.",
+  },
 ];
 
 export function Intro() {
-  const [portraitRef, portraitY] = useLocalParallax([-26, 30]);
-
   return (
     <section id="about" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1600px] px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-        {/* Left — portrait + caption */}
-        <div className="lg:col-span-5 lg:sticky lg:top-28 self-start reveal-up">
-          <div
-            ref={portraitRef}
-            className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-card shadow-[var(--shadow-soft)]"
-          >
-            <motion.img
-              style={{ y: portraitY, scale: 1.06 }}
+        <div className="lg:col-span-5 self-start">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-card shadow-[var(--shadow-soft)]">
+            <img
               src={aboutImg}
               alt="Rahul Tanwar at work"
               loading="lazy"
-              className="h-full w-full object-cover kenburns"
+              className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 ring-1 ring-inset ring-ink/5" />
           </div>
@@ -43,20 +49,21 @@ export function Intro() {
           </div>
         </div>
 
-        {/* Right — editorial body */}
         <div className="lg:col-span-7 space-y-12">
-          <div className="flex items-center gap-4 reveal">
+          <div className="flex items-center gap-4">
             <span className="eyebrow">Chapter I — The Founder</span>
             <span className="h-px flex-1 bg-border" />
           </div>
 
-          <h2 className="font-display text-display-lg reveal">
-            The entrepreneur <br />
-            behind <em className="text-accent">multiple ventures.</em>
+          <h2 className="font-display max-w-[12ch] text-[clamp(2.3rem,4.8vw,4.5rem)] leading-[0.94] tracking-[-0.01em] text-balance">
+            <span className="block">The entrepreneur</span>
+            <span className="block">
+              behind <em className="text-accent">multiple ventures.</em>
+            </span>
           </h2>
 
           <div className="space-y-7 text-lg md:text-xl leading-[1.75] text-foreground/85 max-w-2xl">
-            <p className="reveal">
+            <p>
               Rahul Tanwar is a modern business builder — an operator who treats every company as a
               long-form act of craftsmanship. His work spans
               <span className="text-accent">
@@ -65,35 +72,39 @@ export function Intro() {
               </span>
               and emerging technology.
             </p>
-            <p className="reveal">
+            <p>
               From a decade in global financial services to leadership in the quick-service
               industry, his career has been a deliberate study in building organisations that grow
               with discipline and outlast their founders.
             </p>
-            <p className="reveal text-ink-soft">
+            <p className="text-ink-soft">
               Today, his portfolio is an ecosystem — interconnected ventures designed to create
               sustained, generational value for partners, employees and the communities they touch.
             </p>
           </div>
+        </div>
+      </div>
 
-          <div className="stack-scene grid grid-cols-1 sm:grid-cols-2 gap-4 mt-16 reveal-up">
-            {pillars.map((p, i) => (
-              <StackedCard
-                key={p.k}
-                index={i}
-                className="stack-sticky rounded-[1.25rem] bg-card p-8 md:p-10 shadow-[var(--shadow-soft)] group hover:bg-secondary hover:text-background transition-colors duration-500"
-              >
-                <div className="flex items-baseline justify-between mb-6">
-                  <span className="eyebrow">{p.k}</span>
-                  <span className="h-px w-10 bg-accent-warm" />
-                </div>
-                <h3 className="font-display text-3xl md:text-4xl leading-tight mb-3">{p.t}</h3>
-                <p className="text-sm text-ink-soft group-hover:text-background/70 leading-relaxed transition-colors duration-500">
-                  {p.d}
-                </p>
-              </StackedCard>
-            ))}
-          </div>
+      <div className="mx-auto mt-16 w-full max-w-7xl px-6 md:mt-20 md:px-10">
+        <div className="pillar-rail" role="list" aria-label="Philosophy pillars">
+          {pillars.map((p) => (
+            <div
+              key={p.k}
+              role="listitem"
+              className="pillar-rail__item"
+            >
+              <div className="flex items-baseline gap-3">
+                <span className="eyebrow">{p.k}</span>
+                <span className="pillar-rail__marker" aria-hidden="true" />
+              </div>
+              <h3 className="font-display mt-4 text-3xl md:text-4xl leading-tight">
+                {p.t}
+              </h3>
+              <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-[18ch]">
+                {p.d}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
