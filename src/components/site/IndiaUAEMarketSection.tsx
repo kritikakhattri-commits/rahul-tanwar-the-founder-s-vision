@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useReactiveCard } from "@/components/site/useReactiveCard";
 
 const markets = [
   {
@@ -21,6 +22,7 @@ export function IndiaUAEMarketSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const reactiveCard = useReactiveCard();
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -158,39 +160,42 @@ export function IndiaUAEMarketSection() {
               {markets.map((market, index) => (
                 <article
                   key={market.country}
-                  className="india-uae-card premium-story-panel relative w-full shrink-0 overflow-hidden rounded-[1.5rem] bg-ink text-background shadow-[var(--shadow-editorial)]"
+                  className="reactive-card reactive-card--surface-host india-uae-card premium-story-panel relative w-full shrink-0 overflow-hidden rounded-[1.5rem] bg-ink text-background shadow-[var(--shadow-editorial)]"
+                  {...reactiveCard}
                 >
-                  <div className="relative min-h-[430px] md:min-h-[560px] lg:min-h-[min(68vh,640px)]">
-                    <img
-                      src={market.image}
-                      alt={`${market.country} business and city connection`}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/54 to-ink/14" />
-                    <div className="absolute inset-0 grain" />
+                  <div className="reactive-card__surface">
+                    <div className="relative min-h-[430px] md:min-h-[560px] lg:min-h-[min(68vh,640px)]">
+                      <img
+                        src={market.image}
+                        alt={`${market.country} business and city connection`}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/54 to-ink/14" />
+                      <div className="absolute inset-0 grain" />
 
-                    <div className="relative flex min-h-[430px] flex-col justify-between p-8 md:min-h-[560px] md:p-11 lg:min-h-[min(68vh,640px)]">
-                      <div className="flex items-start justify-between gap-6">
-                        <span className="rounded-full border border-background/20 bg-background/12 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] backdrop-blur-md">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-5xl leading-none md:text-6xl" aria-hidden="true">
-                          {market.flag}
-                        </span>
-                      </div>
-
-                      <div>
-                        <div className="mb-6 flex items-center gap-3">
-                          <span className="h-px w-12 bg-accent" />
-                          <span className="h-2 w-2 rounded-full bg-accent" />
+                      <div className="relative flex min-h-[430px] flex-col justify-between p-8 md:min-h-[560px] md:p-11 lg:min-h-[min(68vh,640px)]">
+                        <div className="flex items-start justify-between gap-6">
+                          <span className="rounded-full border border-background/20 bg-background/12 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] backdrop-blur-md">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="text-5xl leading-none md:text-6xl" aria-hidden="true">
+                            {market.flag}
+                          </span>
                         </div>
-                        <h3 className="font-display text-[4rem] leading-none md:text-[6.5rem] lg:text-[clamp(5rem,7vw,6.5rem)]">
-                          {market.country}
-                        </h3>
-                        <p className="mt-5 max-w-lg text-base leading-[1.7] text-background/76 md:text-lg">
-                          {market.description}
-                        </p>
+
+                        <div>
+                          <div className="mb-6 flex items-center gap-3">
+                            <span className="h-px w-12 bg-accent" />
+                            <span className="h-2 w-2 rounded-full bg-accent" />
+                          </div>
+                          <h3 className="font-display text-[4rem] leading-none md:text-[6.5rem] lg:text-[clamp(5rem,7vw,6.5rem)]">
+                            {market.country}
+                          </h3>
+                          <p className="mt-5 max-w-lg text-base leading-[1.7] text-background/76 md:text-lg">
+                            {market.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>

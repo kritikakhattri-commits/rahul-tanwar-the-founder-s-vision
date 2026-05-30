@@ -1,8 +1,36 @@
 import transitionImg from "@/assets/rahul-transition.jpg";
+import { useReactiveCard } from "@/components/site/useReactiveCard";
 
-const words = ["Innovation", "Execution", "Ownership", "Excellence", "Growth", "Integrity"];
+const principles = [
+  {
+    title: "Innovation",
+    description: "Building ventures through first-principles thinking.",
+  },
+  {
+    title: "Execution",
+    description: "Turning clear vision into disciplined operations.",
+  },
+  {
+    title: "Ownership",
+    description: "Treating every venture with founder-level responsibility.",
+  },
+  {
+    title: "Excellence",
+    description: "Holding the standard when momentum makes compromise easy.",
+  },
+  {
+    title: "Growth",
+    description: "Compounding people, systems and value over the long term.",
+  },
+  {
+    title: "Integrity",
+    description: "Building trust through clarity, consistency and restraint.",
+  },
+];
 
 export function Philosophy() {
+  const reactiveCard = useReactiveCard();
+
   return (
     <section id="philosophy" className="relative">
       <div className="relative h-[60vh] md:h-[80vh] overflow-hidden">
@@ -35,17 +63,43 @@ export function Philosophy() {
             </h2>
           </div>
 
-          <ul className="space-y-2 md:space-y-4">
-            {words.map((w, i) => (
+          <ul className="overflow-hidden border-t border-border" aria-label="Operating principles">
+            {principles.map((principle, i) => (
               <li
-                key={w}
-                className="flex items-baseline gap-6 border-b border-border py-6 md:gap-10 md:py-10"
+                key={principle.title}
+                className="reactive-card group relative overflow-hidden border-b border-border transition-colors duration-500 hover:bg-accent/10"
+                {...reactiveCard}
               >
-                <span className="text-xs md:text-sm font-medium tracking-[0.14em] text-ink-soft w-12">
+                <span
+                  className="pointer-events-none absolute -top-8 left-16 hidden font-display text-[10rem] leading-none text-accent/10 opacity-0 transition-all duration-500 group-hover:left-24 group-hover:opacity-100 md:block"
+                  aria-hidden="true"
+                >
                   0{i + 1}
                 </span>
-                <span className="font-display text-display-lg leading-[0.98] flex-1">{w}</span>
-                <span className="hidden md:inline-block h-px w-24 bg-border" />
+
+                <div className="relative grid items-center gap-4 py-5 md:grid-cols-[5rem_1fr_12rem] md:gap-8 md:py-7">
+                  <span className="text-xs font-medium tracking-[0.14em] text-ink-soft md:text-sm">
+                    0{i + 1}
+                  </span>
+
+                  <div className="min-w-0">
+                    <span className="block font-display text-[clamp(2.8rem,7vw,6.5rem)] leading-[0.95] transition-transform duration-500 group-hover:translate-x-3 md:group-hover:translate-x-5">
+                      {principle.title}
+                    </span>
+                    <p className="max-h-0 max-w-2xl overflow-hidden text-base leading-relaxed text-ink-soft opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-16 group-hover:opacity-100 md:text-lg">
+                      {principle.description}
+                    </p>
+                  </div>
+
+                  <div
+                    className="relative hidden h-20 items-center justify-end md:flex"
+                    aria-hidden="true"
+                  >
+                    <span className="absolute right-0 h-px w-24 origin-right bg-border transition-all duration-500 group-hover:w-36 group-hover:bg-accent" />
+                    <span className="absolute right-0 h-8 w-8 rotate-45 border-r border-t border-border transition-all duration-500 group-hover:border-accent" />
+                    <span className="absolute right-12 h-14 w-14 rounded-full border border-border/70 transition-all duration-500 group-hover:right-16 group-hover:border-accent/60" />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

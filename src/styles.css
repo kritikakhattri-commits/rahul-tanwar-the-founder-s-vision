@@ -195,6 +195,86 @@
       0 16px 38px -28px color-mix(in oklab, var(--secondary-dark) 28%, transparent);
   }
 
+  .reactive-card {
+    --card-x: 50%;
+    --card-y: 50%;
+    --card-rotate-x: 0deg;
+    --card-rotate-y: 0deg;
+    --card-image-x: 0px;
+    --card-image-y: 0px;
+    position: relative;
+    isolation: isolate;
+    transform-style: preserve-3d;
+  }
+
+  .reactive-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at var(--card-x) var(--card-y),
+      color-mix(in oklab, var(--accent) 18%, transparent) 0%,
+      color-mix(in oklab, var(--accent-warm) 8%, transparent) 24%,
+      transparent 54%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms ease;
+  }
+
+  .reactive-card:hover::before {
+    opacity: 0.42;
+  }
+
+  .reactive-card:not(.reactive-card--surface-host) {
+    transition:
+      transform 400ms ease,
+      background-color 500ms ease,
+      box-shadow 400ms ease;
+    will-change: transform;
+  }
+
+  .reactive-card:not(.reactive-card--surface-host):hover {
+    transform:
+      perspective(900px)
+      rotateX(var(--card-rotate-x))
+      rotateY(var(--card-rotate-y))
+      scale(1.01);
+  }
+
+  .reactive-card__surface {
+    position: relative;
+    z-index: 2;
+    min-height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 400ms ease;
+    will-change: transform;
+  }
+
+  .reactive-card--surface-host:hover .reactive-card__surface {
+    transform:
+      perspective(900px)
+      rotateX(var(--card-rotate-x))
+      rotateY(var(--card-rotate-y))
+      scale(1.01);
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .reactive-card:hover::before {
+      opacity: 0;
+    }
+
+    .reactive-card:not(.reactive-card--surface-host):hover,
+    .reactive-card--surface-host:hover .reactive-card__surface,
+    .venture-card.reactive-card:hover .venture-card__image img,
+    .founder-chapter.reactive-card:hover .founder-chapter__image,
+    .india-uae-card.reactive-card:hover img {
+      transform: none;
+    }
+  }
+
   .hairline {
     border-top: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
   }
@@ -340,6 +420,12 @@
     object-fit: cover;
     filter: saturate(0.96) contrast(1.04);
     opacity: 1;
+    transition: transform 400ms ease;
+    will-change: transform;
+  }
+
+  .venture-card.reactive-card:hover .venture-card__image img {
+    transform: translate3d(var(--card-image-x), var(--card-image-y), 0) scale(1.015);
   }
 
   @media (max-width: 767px) {
@@ -377,6 +463,33 @@
   }
   .venture-card .border-border {
     border-color: color-mix(in oklab, var(--ink) 10%, transparent);
+  }
+
+  .venture-card__story {
+    max-width: 34rem;
+  }
+
+  .venture-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.1rem;
+  }
+
+  .venture-card__tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7rem;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid color-mix(in oklab, var(--primary) 18%, transparent);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 12%, var(--card));
+    color: color-mix(in oklab, var(--ink) 82%, var(--primary));
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .pillar-rail {
@@ -442,16 +555,43 @@
     }
   }
 
-  .timeline-card {
+  .founder-chapter {
+    position: relative;
+  }
+
+  .founder-chapter__text {
     isolation: isolate;
   }
 
-  .timeline-card__image-space {
-    background: var(--card);
+  .founder-chapter__number {
+    position: absolute;
+    top: 50%;
+    left: clamp(-8rem, -9vw, -4.5rem);
+    z-index: -1;
+    font-family: var(--font-display);
+    font-size: clamp(4.8rem, 9vw, 8rem);
+    font-weight: 500;
+    line-height: 0.8;
+    color: color-mix(in oklab, var(--primary) 5%, transparent);
+    pointer-events: none;
+    transform: translateY(-50%);
   }
 
-  .timeline-card__image-space::before,
-  .timeline-card__image-space::after {
+  .founder-chapter__image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    max-height: 20rem;
+    overflow: hidden;
+    border-radius: clamp(1rem, 1.8vw, 1.5rem);
+    background: var(--card);
+    box-shadow: var(--shadow-editorial);
+    transform: translateZ(0);
+    transition: transform 400ms ease;
+    will-change: transform;
+  }
+
+  .founder-chapter__image::before,
+  .founder-chapter__image::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -459,41 +599,83 @@
     pointer-events: none;
   }
 
-  .timeline-card__image-space::before {
+  .founder-chapter__image::before {
     background:
       linear-gradient(
         90deg,
-        color-mix(in oklab, var(--card) 16%, transparent) 0%,
-        transparent 18%,
-        transparent 82%,
-        color-mix(in oklab, var(--card) 16%, transparent) 100%
+        color-mix(in oklab, var(--ink) 18%, transparent) 0%,
+        transparent 26%,
+        transparent 74%,
+        color-mix(in oklab, var(--ink) 16%, transparent) 100%
       ),
       linear-gradient(
         180deg,
-        color-mix(in oklab, var(--card) 12%, transparent) 0%,
-        transparent 20%,
-        transparent 80%,
-        color-mix(in oklab, var(--card) 16%, transparent) 100%
+        color-mix(in oklab, var(--background) 12%, transparent) 0%,
+        transparent 22%,
+        transparent 74%,
+        color-mix(in oklab, var(--ink) 20%, transparent) 100%
       );
   }
 
-  .timeline-card__image-space::after {
-    display: none;
+  .founder-chapter__image::after {
+    inset: auto 0 0 0;
+    height: 34%;
+    background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--ink) 24%, transparent));
   }
 
-  .timeline-card__image-space img {
+  .founder-chapter__image img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.94) contrast(1.05);
+    filter: saturate(0.92) contrast(1.06);
     opacity: 1;
+    transform-origin: center;
   }
 
-  @media (min-width: 768px) {
-    .timeline-card__image-space {
-      min-height: 100%;
+  .founder-chapter.reactive-card:hover .founder-chapter__image {
+    transform: translate3d(var(--card-image-x), var(--card-image-y), 0) translateZ(18px);
+  }
+
+  .founder-chapter--featured {
+    padding-block: 0 2.25rem;
+  }
+
+  .founder-chapter--featured .founder-chapter__image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .founder-chapter--featured .founder-chapter__number {
+    color: color-mix(in oklab, var(--accent) 6%, transparent);
+  }
+
+  .founder-chapter--featured h3 {
+    font-size: clamp(3rem, 7vw, 5.65rem);
+  }
+
+  .founder-chapter--featured p {
+    font-size: 1.125rem;
+  }
+
+  @media (min-width: 1024px) {
+    .founder-chapter {
+      min-height: 0;
+    }
+
+    .founder-chapter__image {
+      aspect-ratio: 16 / 10;
+      height: clamp(16.25rem, 22vw, 20rem);
+      max-height: 20rem;
+    }
+
+    .founder-chapter--featured .founder-chapter__image {
+      grid-column: span 5 / span 5;
+      aspect-ratio: 16 / 10;
+    }
+
+    .founder-chapter--featured .founder-chapter__text {
+      grid-column: 8 / span 5;
     }
   }
 
@@ -553,7 +735,7 @@
   @media (min-width: 1024px) {
     .stacking-cards {
       display: block;
-      min-height: min(66vh, 620px);
+      min-height: var(--stacking-shell-height, min(66vh, 620px));
       overflow: hidden;
       isolation: isolate;
     }
@@ -1050,6 +1232,15 @@
     transform: translateZ(0);
   }
 
+  .india-uae-card img {
+    transition: transform 400ms ease;
+    will-change: transform;
+  }
+
+  .india-uae-card.reactive-card:hover img {
+    transform: translate3d(var(--card-image-x), var(--card-image-y), 0) scale(1.015);
+  }
+
   @media (min-width: 1024px) {
     .india-uae-horizontal-track {
       flex-direction: row;
@@ -1070,8 +1261,23 @@
     .ghost-btn,
     .venture-card,
     .india-uae-card,
-    .stacking-card {
+    .stacking-card,
+    .reactive-card,
+    .reactive-card__surface {
       transition-duration: 0.01ms;
+    }
+
+    .reactive-card::before {
+      opacity: 0 !important;
+    }
+
+    .reactive-card:not(.reactive-card--surface-host),
+    .reactive-card__surface,
+    .venture-card__image img,
+    .founder-chapter__image,
+    .india-uae-card img {
+      transform: none !important;
+      will-change: auto;
     }
 
     .india-uae-horizontal-track {

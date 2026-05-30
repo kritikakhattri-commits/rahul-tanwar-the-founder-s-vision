@@ -43,17 +43,25 @@ export function StackingCards({ children, className = "" }: StackingCardsProps) 
           return;
         }
 
+        const firstCardHeight = cards[0]?.offsetHeight ?? window.innerHeight;
+        const scrollDistance = () =>
+          window.innerHeight * Math.max(cards.length - 1, 1) * 0.95 + window.innerHeight * 0.35;
+
+        root.style.setProperty("--stacking-shell-height", `${firstCardHeight}px`);
+        root.style.setProperty("--stacking-card-count", String(cards.length));
+
         const timeline = gsap.timeline({
-          defaults: { ease: "power2.out" },
+          defaults: { ease: "none" },
           scrollTrigger: {
             trigger: root,
-            start: "top top+=96",
-            end: () => `+=${window.innerHeight * Math.max(cards.length - 1, 1) * 1.15}`,
+            start: "top top",
+            end: () => `+=${scrollDistance()}`,
             pin: true,
             scrub: 1,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-            fastScrollEnd: true,
+            fastScrollEnd: false,
+            pinSpacing: true,
           },
         });
 
@@ -61,31 +69,30 @@ export function StackingCards({ children, className = "" }: StackingCardsProps) 
           gsap.set(card, {
             zIndex: index + 1,
             transformOrigin: "center top",
-            yPercent: index === 0 ? 0 : 112,
+            yPercent: index === 0 ? 0 : 108,
             opacity: 1,
             scale: 1,
           });
         });
 
         cards.slice(1).forEach((card, index) => {
-          const previousCards = cards.slice(0, index + 1);
-          const position = index * 1.08;
+          const previousCard = cards[index];
+          const position = index;
 
           timeline
             .to(
               card,
               {
                 yPercent: 0,
-                duration: 1.15,
+                duration: 1,
               },
               position,
             )
             .to(
-              previousCards,
+              previousCard,
               {
-                scale: 0.97,
-                yPercent: -1.8,
-                duration: 1.15,
+                scale: 0.975,
+                duration: 1,
               },
               position,
             );
@@ -112,6 +119,8 @@ export function StackingCards({ children, className = "" }: StackingCardsProps) 
           gsap.set(cards, {
             clearProps: "transform,transformOrigin,zIndex,opacity,y,yPercent,scale",
           });
+          root.style.removeProperty("--stacking-shell-height");
+          root.style.removeProperty("--stacking-card-count");
           timeline.kill();
         };
       });
