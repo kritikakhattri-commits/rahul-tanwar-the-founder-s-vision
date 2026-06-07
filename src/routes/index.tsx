@@ -10,21 +10,24 @@ import { Timeline } from "@/components/site/Timeline";
 import { Vision } from "@/components/site/Vision";
 import { Contact, Footer } from "@/components/site/Contact";
 import { ExecutiveAssistant } from "@/components/site/ExecutiveAssistant";
+import { resolveCmsImage } from "@/lib/cms-assets";
+import { defaultCmsContent } from "@/lib/cms-content";
+import { useCmsContent } from "@/lib/use-cms-content";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Rahul Tanwar — Founder, Investor & Business Leader" },
+      { title: defaultCmsContent.seo.pageTitle },
       {
         name: "description",
-        content:
-          "Rahul Tanwar is an entrepreneur building an ecosystem of ventures across beverages, consumer brands, textiles, manufacturing, finance and innovation-led industries.",
+        content: defaultCmsContent.seo.metaDescription,
       },
-      { property: "og:title", content: "Rahul Tanwar — Founder, Investor & Business Leader" },
+      { name: "keywords", content: defaultCmsContent.seo.keywords },
+      { property: "og:title", content: defaultCmsContent.seo.pageTitle },
       {
         property: "og:description",
-        content:
-          "Building businesses that create lasting value. An ecosystem of ventures led by Rahul Tanwar.",
+        content: defaultCmsContent.seo.metaDescription,
       },
       { property: "og:type", content: "profile" },
     ],
@@ -33,20 +36,43 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const content = useCmsContent();
+
+  useEffect(() => {
+    document.title = content.seo.pageTitle;
+    setMeta("description", content.seo.metaDescription);
+    setMeta("keywords", content.seo.keywords);
+    setMeta("og:title", content.seo.pageTitle, "property");
+    setMeta("og:description", content.seo.metaDescription, "property");
+    setMeta("og:image", resolveCmsImage(content.seo.openGraphImage), "property");
+  }, [content.seo]);
+
   return (
     <main className="relative bg-background text-foreground overflow-x-hidden">
-      <Nav />
-      <Hero />
+      <Nav content={content.header} />
+      <Hero content={content.hero} />
       <CompanyTicker />
-      <Intro />
+      <Intro content={content.about} />
       <IndiaUAEMarketSection />
-      <Ventures />
-      <Philosophy />
-      <Timeline />
-      <Vision />
-      <Contact />
-      <Footer />
-      <ExecutiveAssistant />
+      <Philosophy content={content.philosophy} />
+      <Ventures content={content.ventures} />
+      <Timeline content={content.journey} />
+      <Vision content={content.vision} />
+      <Contact content={content.contact} />
+      <Footer content={content.contact} logoText={content.header.logoText} />
+      <ExecutiveAssistant label={content.hero.assistantLabel} />
     </main>
   );
+}
+
+function setMeta(name: string, value: string, attribute: "name" | "property" = "name") {
+  let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${name}"]`);
+
+  if (!element) {
+    element = document.createElement("meta");
+    element.setAttribute(attribute, name);
+    document.head.appendChild(element);
+  }
+
+  element.content = value;
 }

@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { handleCmsRequest } from "./server/cms";
 import { handleExecutiveAssistantRequest } from "./server/executive-assistant";
 
 type ServerEntry = {
@@ -74,6 +75,10 @@ export default {
 
       if (url.pathname === "/api/executive-assistant") {
         return await handleExecutiveAssistantRequest(request, env);
+      }
+
+      if (url.pathname === "/api/cms" || url.pathname === "/api/cms/auth") {
+        return await handleCmsRequest(request, env);
       }
 
       const handler = await getServerEntry();

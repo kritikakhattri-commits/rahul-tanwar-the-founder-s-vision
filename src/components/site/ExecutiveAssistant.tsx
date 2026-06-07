@@ -25,7 +25,7 @@ function isAssistantLanguage(value: string | null): value is AssistantLanguage {
   return value === "en" || value === "ar";
 }
 
-export function ExecutiveAssistant() {
+export function ExecutiveAssistant({ label = assistantName }: { label?: string }) {
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState<AssistantLanguage | null>(null);
   const [messages, setMessages] = useState<Array<ChatMessage>>([]);
@@ -114,7 +114,7 @@ export function ExecutiveAssistant() {
   return (
     <div className="rt-assistant" dir={isArabic ? "rtl" : "ltr"}>
       {open ? (
-        <section className="rt-assistant__window" aria-label={assistantName} aria-live="polite">
+        <section className="rt-assistant__window" aria-label={label} aria-live="polite">
           <header className="rt-assistant__header">
             <div>
               <div className="rt-assistant__eyebrow">{copy.subtitle}</div>
@@ -141,7 +141,7 @@ export function ExecutiveAssistant() {
           {!language ? (
             <div className="rt-assistant__language-panel">
               <div>
-                <div className="rt-assistant__eyebrow">{assistantName}</div>
+                <div className="rt-assistant__eyebrow">{label}</div>
                 <h3>{copy.chooseLanguage}</h3>
               </div>
               <div className="rt-assistant__language-grid">
@@ -213,7 +213,7 @@ export function ExecutiveAssistant() {
         aria-label={copy.launcher}
       >
         <MessageCircle aria-hidden="true" size={22} />
-        <span>{assistantName}</span>
+        <span>{label}</span>
       </button>
     </div>
   );

@@ -1,8 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;450;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600&display=swap");
 
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+
+@font-face {
+  font-family: "MADE Tommy Soft";
+  src: url("/fonts/MADETommySoft-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,9 +46,9 @@
   --color-ink-soft: var(--ink-soft);
   --color-cream: var(--cream);
 
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "Inter", system-ui, sans-serif;
+  --font-display: "MADE Tommy Soft", Inter, Arial, sans-serif;
+  --font-sans: "MADE Tommy Soft", Inter, Arial, sans-serif;
+  --font-mono: "MADE Tommy Soft", Inter, Arial, sans-serif;
 }
 
 :root {
@@ -109,6 +117,26 @@
     overflow-x: clip;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans);
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
   section[id] {
     scroll-margin-top: 6rem;
   }
@@ -131,32 +159,33 @@
   }
 
   .text-display-xl {
-    font-size: clamp(3.2rem, 12vw, 10.5rem);
-    line-height: 0.92;
+    font-size: clamp(2.85rem, 10vw, 10.5rem);
+    line-height: 0.96;
     letter-spacing: 0;
   }
   .hero-title {
     display: block;
     max-width: 100%;
-    font-size: clamp(3rem, 13vw, 8.9rem);
-    line-height: 0.88;
+    font-size: clamp(2.85rem, 12vw, 8.9rem);
+    line-height: 0.94;
     letter-spacing: 0;
-    text-wrap: nowrap;
+    text-wrap: balance;
   }
   .text-display-lg {
-    font-size: clamp(2.85rem, 8vw, 6.5rem);
-    line-height: 0.98;
+    font-size: clamp(2.25rem, 8vw, 6.5rem);
+    line-height: 1;
     letter-spacing: 0;
   }
   .text-display-md {
-    font-size: clamp(2.15rem, 4.6vw, 3.8rem);
-    line-height: 1.08;
+    font-size: clamp(2rem, 7vw, 3.8rem);
+    line-height: 1.1;
     letter-spacing: 0;
   }
 
   @media (min-width: 768px) {
     .hero-title {
-      font-size: clamp(5.8rem, 10.8vw, 9.6rem);
+      font-size: clamp(5.2rem, 10vw, 9.6rem);
+      line-height: 0.9;
     }
   }
 
@@ -179,7 +208,7 @@
   .premium-story-panel {
     position: relative;
     overflow: hidden;
-    border-radius: 1.5rem;
+    border-radius: clamp(1rem, 2vw, 1.5rem);
     box-shadow:
       0 34px 90px -52px color-mix(in oklab, var(--ink) 38%, transparent),
       0 14px 34px -26px color-mix(in oklab, var(--secondary-dark) 24%, transparent);
@@ -288,7 +317,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 1.75rem;
+    min-height: 3rem;
+    padding: 0.9rem clamp(1.2rem, 3vw, 1.75rem);
     font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 500;
@@ -325,7 +355,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 1.75rem;
+    min-height: 3rem;
+    padding: 0.9rem clamp(1.2rem, 3vw, 1.75rem);
     font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 500;
@@ -348,6 +379,111 @@
     background: var(--primary);
     color: #ffffff;
     transform: scale(1.02);
+  }
+
+  .principles-carousel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .principles-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .editorial-two-col-scroll,
+  .editorial-row-scroll,
+  .editorial-card-track,
+  .timeline-mobile-track,
+  .stacking-cards {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .editorial-two-col-scroll,
+  .editorial-row-scroll {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .editorial-card-track,
+  .timeline-mobile-track {
+    scroll-snap-type: x mandatory;
+  }
+
+  .editorial-two-col-scroll::-webkit-scrollbar,
+  .editorial-row-scroll::-webkit-scrollbar,
+  .editorial-card-track::-webkit-scrollbar,
+  .timeline-mobile-track::-webkit-scrollbar,
+  .stacking-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .principles-carousel > li {
+    width: 82vw;
+    min-width: 82vw;
+    max-width: 82vw;
+    flex: 0 0 82vw;
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 640px) {
+    .principles-carousel > li {
+      width: 48vw;
+      min-width: 48vw;
+      max-width: 48vw;
+      flex-basis: 48vw;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .principles-carousel {
+      display: block;
+      overflow-x: hidden;
+      scroll-snap-type: none;
+    }
+
+    .principles-carousel > li {
+      width: auto;
+      min-width: 0;
+      max-width: none;
+      flex: initial;
+      scroll-snap-align: none;
+    }
+  }
+
+  .venture-card__cta {
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 8.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border: 1px solid color-mix(in oklab, var(--primary) 55%, transparent);
+    border-radius: 999px;
+    padding: 0.72rem 1.05rem;
+    color: var(--primary);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+    transition:
+      transform 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .venture-card__cta:hover {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #ffffff;
+    transform: translateY(-1px);
   }
 
   .eyebrow {
@@ -429,10 +565,178 @@
   }
 
   @media (max-width: 767px) {
+    body {
+      font-size: 15.5px;
+    }
+
+    section[id] {
+      scroll-margin-top: 4.75rem;
+    }
+
+    .mobile-nav__bar {
+      height: 4.25rem;
+      padding-inline: 1.25rem;
+    }
+
+    .mobile-nav__bar a span:last-child {
+      font-size: clamp(1.18rem, 5.6vw, 1.42rem);
+      line-height: 1;
+    }
+
+    .mobile-nav__toggle {
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+    }
+
+    .mobile-nav__menu {
+      gap: 0.85rem;
+      padding-block: 1.1rem 1.35rem;
+    }
+
+    .mobile-nav__link {
+      border-bottom: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+      padding-block: 0.72rem;
+      font-size: clamp(1.35rem, 6vw, 1.85rem);
+      line-height: 1.08;
+    }
+
+    .mobile-nav__menu .ghost-btn {
+      width: 100%;
+      margin-top: 0.35rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.55rem, 12.25vw, 3.45rem);
+      line-height: 0.96;
+    }
+
+    .text-display-lg {
+      font-size: clamp(2.15rem, 10vw, 2.75rem);
+      line-height: 1.08;
+    }
+
+    .text-display-md {
+      font-size: clamp(1.9rem, 8.4vw, 2.55rem);
+      line-height: 1.08;
+    }
+
+    .mobile-hero {
+      min-height: auto;
+      padding-top: 5.3rem;
+    }
+
+    .mobile-hero__grid {
+      min-height: 0;
+      gap: 2.15rem;
+      padding-bottom: 2.25rem;
+    }
+
+    .mobile-hero p:not(.font-display) {
+      max-width: 33ch;
+      font-size: 0.95rem;
+      line-height: 1.72;
+    }
+
+    .mobile-hero__media {
+      height: clamp(26rem, 74svh, 34rem);
+      min-height: 0;
+    }
+
+    .hero-portrait-image {
+      object-position: 50% 30%;
+    }
+
+    .magnetic-btn,
+    .ghost-btn {
+      min-height: 3rem;
+      padding: 0.86rem 1.08rem;
+      font-size: 0.66rem;
+    }
+
+    .eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+    }
+
+    #about,
+    #philosophy,
+    #ventures,
+    #markets,
+    #vision,
+    #contact {
+      padding-block: 4.25rem;
+    }
+
+    #journey {
+      padding-block: 3.8rem;
+    }
+
+    #about > div:first-child,
+    #philosophy > div:first-child > div,
+    #ventures > div,
+    #markets > div,
+    #journey > div,
+    #vision > div.relative,
+    #contact > div {
+      padding-inline: 1.25rem;
+    }
+
+    #about h2,
+    #philosophy h2,
+    #ventures h2,
+    #markets h2,
+    #journey h2,
+    #vision h2,
+    #contact h2 {
+      max-width: 13.5ch;
+    }
+
+    #about h2 {
+      max-width: 15.5ch;
+    }
+
+    #about p,
+    #philosophy p,
+    #ventures p,
+    #markets p,
+    #journey p,
+    #vision p,
+    #contact p {
+      line-height: 1.7;
+    }
+
+    .founder-portrait-frame {
+      aspect-ratio: 4 / 5.35;
+      max-height: 36rem;
+    }
+
+    .founder-portrait-image {
+      object-position: 50% 35%;
+    }
+
+    .leadership-media {
+      height: clamp(23rem, 64svh, 29rem);
+      min-height: 0;
+    }
+
+    .leadership-media__image {
+      object-position: 47% 50%;
+    }
+
+    .leadership-media__label {
+      max-width: calc(100% - 1.5rem);
+      padding: 0.78rem 0.95rem;
+      border-radius: 0.9rem;
+    }
+
     .venture-card__image {
       inset: auto 0 0 0;
       width: 100%;
-      height: 48%;
+      height: 36%;
+      opacity: 0.45;
     }
 
     .venture-card__image::before {
@@ -451,6 +755,43 @@
           transparent 82%,
           color-mix(in oklab, var(--venture-card-bg, var(--card)) 14%, transparent) 100%
         );
+    }
+
+    .stacking-cards,
+    .principles-carousel,
+    .editorial-card-track,
+    .india-uae-horizontal-track {
+      gap: 0.9rem;
+      scroll-padding-inline: 1.25rem;
+    }
+
+    .stacking-card,
+    .principles-carousel > li {
+      width: 84vw;
+      min-width: 84vw;
+      max-width: 84vw;
+      flex-basis: 84vw;
+    }
+
+    .india-uae-card {
+      width: 84vw;
+      min-width: 84vw;
+      max-width: 84vw;
+      flex-basis: 84vw;
+    }
+
+    .stacking-card {
+      min-height: 31rem;
+      padding: 1.4rem;
+    }
+
+    .venture-card__tags {
+      gap: 0.42rem;
+    }
+
+    .venture-card__tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
     }
   }
 
@@ -490,6 +831,22 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  @media (max-width: 767px) {
+    .venture-card__story {
+      max-width: 100%;
+    }
+
+    .venture-card__cta {
+      width: 100%;
+      min-width: 0;
+      padding-right: 3.4rem;
+    }
+
+    .venture-card__tag {
+      white-space: normal;
+    }
   }
 
   .pillar-rail {
@@ -566,7 +923,7 @@
   .founder-chapter__number {
     position: absolute;
     top: 50%;
-    left: clamp(-8rem, -9vw, -4.5rem);
+    left: clamp(-5rem, -7vw, -3rem);
     z-index: -1;
     font-family: var(--font-display);
     font-size: clamp(4.8rem, 9vw, 8rem);
@@ -651,7 +1008,7 @@
   }
 
   .founder-chapter--featured h3 {
-    font-size: clamp(3rem, 7vw, 5.65rem);
+    font-size: clamp(2.55rem, 7vw, 5.65rem);
   }
 
   .founder-chapter--featured p {
@@ -681,14 +1038,20 @@
 
   .stacking-cards {
     position: relative;
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 1.25rem;
-    overflow: visible;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
   }
 
   .stacking-card {
-    width: 100%;
-    max-width: 100%;
+    width: 82vw;
+    min-width: 82vw;
+    max-width: 82vw;
+    flex: 0 0 82vw;
+    scroll-snap-align: start;
     color: #1f3a34;
     transform: translateZ(0);
   }
@@ -737,12 +1100,18 @@
       display: block;
       min-height: var(--stacking-shell-height, min(66vh, 620px));
       overflow: hidden;
+      scroll-snap-type: none;
       isolation: isolate;
     }
 
     .stacking-card {
       position: absolute;
       inset: 0;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      flex: initial;
+      scroll-snap-align: none;
       margin-bottom: 0;
       border-radius: clamp(1.25rem, 2vw, 1.75rem);
       will-change: transform;
@@ -807,6 +1176,16 @@
     color: var(--ink);
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  @media (max-width: 767px) {
+    .founder-chapter__number {
+      position: static;
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: clamp(3rem, 18vw, 4.8rem);
+      transform: none;
+    }
   }
 
   .company-ticker__item::after {
@@ -1182,8 +1561,9 @@
 
     .rt-assistant__launcher {
       align-self: flex-end;
-      width: 3.25rem;
-      max-width: 3.25rem;
+      width: 3rem;
+      min-height: 3rem;
+      max-width: 3rem;
       padding-inline: 0;
     }
 
@@ -1223,12 +1603,25 @@
 
   .india-uae-horizontal-track {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .india-uae-horizontal-track::-webkit-scrollbar {
+    display: none;
   }
 
   .india-uae-card {
-    min-width: 0;
+    width: 80vw;
+    min-width: 80vw;
+    max-width: 80vw;
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
     transform: translateZ(0);
   }
 
@@ -1247,12 +1640,17 @@
       align-items: stretch;
       width: max-content;
       gap: clamp(1.25rem, 2.4vw, 2rem);
+      overflow-x: visible;
+      scroll-snap-type: none;
       will-change: transform;
     }
 
     .india-uae-card {
       width: var(--market-card-width, min(100%, 700px));
+      min-width: 0;
       max-width: 100%;
+      flex: initial;
+      scroll-snap-align: none;
     }
   }
 
